@@ -1,30 +1,32 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="headerNav">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('lorekeeper.settings.site_name', 'Lorekeeper') }}
-        </a>
+        <div class="bg-dark rounded-circle logodisplay" style="width: 100px; height: 100px; position: absolute; top: -50px; left: 50%; transform: translate(-50%); display: flex; justify-content: center; align-items: center;">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <img class="img-fluid m-2" style="width: 90px; height: 90px;" src="https://dragolets.com/files/GeneralAssets/logo.png">
+            </a>
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto nav-navleft">
                 <li class="nav-item">
-                    @if (Auth::check() && Auth::user()->is_news_unread && config('lorekeeper.extensions.navbar_news_notif'))
+                    @if(Auth::check() && Auth::user()->is_news_unread && Config::get('lorekeeper.extensions.navbar_news_notif'))
                         <a class="nav-link d-flex text-warning" href="{{ url('news') }}"><strong>News</strong><i class="fas fa-bell"></i></a>
                     @else
                         <a class="nav-link" href="{{ url('news') }}">News</a>
                     @endif
                 </li>
                 <li class="nav-item">
-                    @if (Auth::check() && Auth::user()->is_sales_unread && config('lorekeeper.extensions.navbar_news_notif'))
+                    @if(Auth::check() && Auth::user()->is_sales_unread && Config::get('lorekeeper.extensions.navbar_news_notif'))
                         <a class="nav-link d-flex text-warning" href="{{ url('sales') }}"><strong>Sales</strong><i class="fas fa-bell"></i></a>
                     @else
                         <a class="nav-link" href="{{ url('sales') }}">Sales</a>
                     @endif
                 </li>
-                @if (Auth::check())
+                @if(Auth::check())
                     <li class="nav-item dropdown">
                         <a id="inventoryDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             Home
@@ -32,7 +34,7 @@
 
                         <div class="dropdown-menu" aria-labelledby="inventoryDropdown">
                             <a class="dropdown-item" href="{{ url('characters') }}">
-                                My Characters
+                                My Dragolets
                             </a>
                             <a class="dropdown-item" href="{{ url('characters/myos') }}">
                                 My MYO Slots
@@ -42,10 +44,6 @@
                             </a>
                             <a class="dropdown-item" href="{{ url('bank') }}">
                                 Bank
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ url('comments/liked') }}">
-                                Liked Comments
                             </a>
                         </div>
                     </li>
@@ -61,7 +59,7 @@
                                 Claims
                             </a>
                             <a class="dropdown-item" href="{{ url('reports') }}">
-                                Reports
+                                My Reports
                             </a>
                             <a class="dropdown-item" href="{{ url('designs') }}">
                                 Design Approvals
@@ -86,10 +84,10 @@
                             Users
                         </a>
                         <a class="dropdown-item" href="{{ url('masterlist') }}">
-                            Character Masterlist
+                            Dragolet Masterlist
                         </a>
-                        <a class="dropdown-item" href="{{ url('myos') }}">
-                            MYO Slot Masterlist
+                        <a class="dropdown-item" href="{{ url('gallery') }}">
+                            Gallery
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ url('raffles') }}">
@@ -118,9 +116,6 @@
                         </a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('gallery') }}">Gallery</a>
-                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -136,12 +131,12 @@
                         </li>
                     @endif
                 @else
-                    @if (Auth::user()->isStaff)
+                    @if(Auth::user()->isStaff)
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('admin') }}"><i class="fas fa-crown"></i></a>
                         </li>
                     @endif
-                    @if (Auth::user()->notifications_unread)
+                    @if(Auth::user()->notifications_unread)
                         <li class="nav-item">
                             <a class="nav-link btn btn-secondary btn-sm" href="{{ url('notifications') }}"><span class="fas fa-envelope"></span> {{ Auth::user()->notifications_unread }}</a>
                         </li>
@@ -183,7 +178,8 @@
                             <a class="dropdown-item" href="{{ url('account/settings') }}">
                                 Settings
                             </a>
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
